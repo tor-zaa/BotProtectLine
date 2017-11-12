@@ -56,7 +56,7 @@ tracer.addOpInterrupt(17,NOTIFIED_ACCEPT_GROUP_INVITATION)
 
 def NOTIFIED_KICKOUT_FROM_GROUP(op):
     try:
-				client.kickoutFromGroup(op.param1,[op.param2])
+	sendMessage(op.param1, "คุณ " + client.getContact(op.param2).displayName + " ห้ามลบสมาชิกน่ะ") + client.kickoutFromGroup(op.param1,[op.param2])
     except Exception as e:
         print e
         print ("\n\nNOTIFIED_KICKOUT_FROM_GROUP\n\n")
@@ -66,7 +66,7 @@ tracer.addOpInterrupt(19,NOTIFIED_KICKOUT_FROM_GROUP)
 
 def NOTIFIED_CANCEL_INVITATION_GROUP(op):
     try:
-        client.kickoutFromGroup(op.param1,[op.param2])
+        sendMessage(op.param1, "คุณ " + client.getContact(op.param2).displayName + " ห้ามยกเลิกการเชิญที่ค้างอยู่น่ะ") + client.kickoutFromGroup(op.param1,[op.param2])
     except Exception as e:
         print e
         print ("\n\nNOTIFIED_CANCEL_INVITATION_GROUP\n\n")
@@ -76,13 +76,23 @@ tracer.addOpInterrupt(32,NOTIFIED_CANCEL_INVITATION_GROUP)
 
 def CANCEL_INVITATION_GROUP(op):
     try:
-        client.cancelGroupInvitation(op.param1,[op.param3])
+        sendMessage(op.param1, "คุณ " + client.getContact(op.param2).displayName + " ยกเลิกการเชิญเข้ากลุ่ม") + client.cancelGroupInvitation(op.param1,[op.param3])
     except Exception as e:
         print e
         print ("\n\nCANCEL_INVITATION_GROUP\n\n")
         return
 
 tracer.addOpInterrupt(31,CANCEL_INVITATION_GROUP)
+
+def NOTIFIED_LEAVE_GROUP(op):
+    try:
+        sendMessage(op.param1, "คุณ " + client.getContact(op.param2).displayName + " ลาก่อนน่ะ") + client.cancelGroupLeave(op.param1,[op.param3])
+    except Exception as e:
+        print e
+        print ("\n\nNOTIFIED_LEAVE_GROUP\n\n")
+        return
+
+tracer.addOpInterrupt(15,NOTIFIED_LEAVE_GROUP)
 
 def RECEIVE_MESSAGE(op):
     msg = op.message
