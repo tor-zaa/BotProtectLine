@@ -45,7 +45,8 @@ def sendMessage(to, text, contentMetadata={}, contentType=0):
 def NOTIFIED_ACCEPT_GROUP_INVITATION(op):
     #print op
     try:
-        sendMessage(op.param1, client.getContact(op.param2).displayName + ", Selamat Datang")
+        sendMessage(op.param1, "สวัสดีคุณ " + client.getContact(op.param2).displayName + " ยินดีต้อนรับจ้า")
+        sendMessage(op.param1, "เข้ามาใหม่ช่วยแน่ะนำตัว\n")
     except Exception as e:
         print e
         print ("\n\nNOTIFIED_ACCEPT_GROUP_INVITATION\n\n")
